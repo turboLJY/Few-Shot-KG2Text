@@ -65,12 +65,12 @@ def run_train_batch(config, batch, teacher, student, plm, reconstructor, copyer,
                       return_dict=True)
     gen_loss = output_dict["loss"]
 
-    # decoder_input_embeddings = plm.get_input_embeddings()(gen_outputs[:, :-1])
-    # decoder_output_hiddens = output_dict["decoder_hidden_states"][-1]
-    # pointer = pointer.to(device)
-    # pointer_masks = pointer_masks.to(device)
-    # copy_prob = copyer(decoder_input_embeddings, decoder_output_hiddens, pointer[:, 1:])
-    # copy_loss = copy_prob.masked_select(pointer_masks[:, 1:]).mean()
+    decoder_input_embeddings = plm.get_input_embeddings()(gen_outputs[:, :-1])
+    decoder_output_hiddens = output_dict["decoder_hidden_states"][-1]
+    pointer = pointer.to(device)
+    pointer_masks = pointer_masks.to(device)
+    copy_prob = copyer(decoder_input_embeddings, decoder_output_hiddens, pointer[:, 1:])
+    copy_loss = copy_prob.masked_select(pointer_masks[:, 1:]).mean()
 
     recon_positions = recon_positions.to(device)
     recon_relations = recon_relations.to(device)
@@ -78,7 +78,7 @@ def run_train_batch(config, batch, teacher, student, plm, reconstructor, copyer,
     rec_logits = reconstructor(recon_positions, output_dict["encoder_hidden_states"][-1])
     rec_loss = compute_ce_loss(rec_logits, recon_relations, recon_masks)
 
-    loss = gen_loss + rec_loss * config["rec_weight"] + kd_loss * config["kd_weight"] # + copy_loss * config["cp_weight"]
+    loss = gen_loss + rec_loss * config["rec_weight"] + kd_loss * config["kd_weight"] + copy_loss * config["cp_weight"]
 
     plm_optimizer.zero_grad()
     external_optimizer.zero_grad()
@@ -86,7 +86,7 @@ def run_train_batch(config, batch, teacher, student, plm, reconstructor, copyer,
     external_optimizer.step()
     plm_optimizer.step()
 
-    return gen_loss.item(), rec_loss.item(), kd_loss.item(), 0#, copy_loss.item()
+    return gen_loss.item(), rec_loss.item(), kd_loss.item(), copy_loss.item()
 
 
 def run_eval_batch(config, batch, teacher, student, plm, reconstructor, copyer, device):
@@ -310,12 +310,12 @@ def test(config):
     vocabs["node"] = Vocab(config["node_vocab"])
     vocabs["relation"] = Vocab(config["relation_vocab"])
 
-    logger.info("Build Teacher Model.")
-    teacher = BartForConditionalGeneration.from_pretrained(config["teacher_dir"])
-    teacher.requires_grad = False
-    for para in teacher.parameters():
-        para.requires_grad = False
-    teacher.to(device)
+    # logger.info("Build Teacher Model.")
+    # teacher = BartForConditionalGeneration.from_pretrained(config["teacher_dir"])
+    # teacher.requires_grad = False
+    # for para in teacher.parameters():
+    #     para.requires_grad = False
+    # teacher.to(device)
 
     logger.info("Build Student Model.")
     student = GraphEncoder(vocabs["node"].size(), vocabs["relation"].size(),

@@ -5,7 +5,7 @@ This repository contains the source code and datasets for the ACL 2021 Findings 
 # Directory
 
 - [Requirements](#Requirements)
-- [Datasets](#Datasets)
+- [Datasets and Models](#Datasets and Models)
 - [Training Instructions](#Training-Instructions)
 - [Testing Instructions](#Testing-Instructions)
 - [License](#License)
@@ -16,10 +16,11 @@ This repository contains the source code and datasets for the ACL 2021 Findings 
 - Python 3.7
 - Pytorch 1.8
 - torch-geometric 
+- transformers
 - Anaconda3
 
-# Datasets
-Our processed KG-to-Text datasets, including WebNLG, Agenda and GenWiki-Fine, can be downloaded from [Google drive](). Specifically, we choose the three largest domains, i.e., Food, Airport, and Building, from WebNLG, and two largest domains, i.e., Sports and Games, from GenWiki-Fine. Their original datasets can be downloaded from [WebNLG](https://webnlg-challenge.loria.fr/challenge_2017/), [Agenda](https://github.com/rikdz/GraphWriter), and [Genwiki](https://github.com/zhijing-jin/genwiki). The WebNLG dataset is made of xml files, you can refer to [this repository](https://github.com/zhijing-jin/WebNLG_Reader) to transform them into json files.
+# Datasets and Models
+Our processed KG-to-Text datasets, including WebNLG, Agenda and GenWiki-Fine, can be downloaded from [Google drive](). Specifically, we choose the three largest domains, i.e., Food, Airport, and Building, from WebNLG, and two largest domains, i.e., Sports and Games, from GenWiki-Fine. Their original datasets can be downloaded from [WebNLG](https://webnlg-challenge.loria.fr/challenge_2017/), [Agenda](https://github.com/rikdz/GraphWriter), and [Genwiki](https://github.com/zhijing-jin/genwiki). The WebNLG dataset is made of xml files, you can refer to [this repository](https://github.com/zhijing-jin/WebNLG_Reader) to transform them into json files. We utilize the large version of BART from Hugging Face.
 
 # Training Instructions
 

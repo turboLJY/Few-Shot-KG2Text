@@ -1,9 +1,9 @@
 # general
-gpu_id: 3
+gpu_id: 0
 use_gpu: True
 seed: 19971003
 state: INFO
-dataset: webnlg-few
+dataset: webnlg
 num_samples: all  # 500
 reproducibility: True
 mode: train
@@ -28,8 +28,8 @@ plm_lr: 0.000001
 external_learner: adamw
 external_lr: 0.00001
 rec_weight: 1.0
-kd_weight: 5.0
-cp_weight: 0.1
+kd_weight: 1.0
+cp_weight: 0.5
 gnn_layers: 2
 embedding_size: 1024
 hidden_size: 1024
@@ -38,8 +38,8 @@ hidden_size: 1024
 eval_batch_size: 20
 
 # testing settings
-external_model: './ckpt/webnlg-few-500-399/external.bin'
-fine_tuned_plm_dir: './ckpt/webnlg-few-500-399'
+external_model: './ckpt/webnlg-all-399/external.bin'
+fine_tuned_plm_dir: './ckpt/webnlg-all-399'
 test_batch_size: 20
 max_seq_length: 100
-output_dir: './ckpt/webnlg-few-500-399'
+output_dir: './ckpt/webnlg-all-399'

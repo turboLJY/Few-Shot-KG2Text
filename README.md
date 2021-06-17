@@ -24,7 +24,7 @@ Our processed KG-to-Text datasets, including WebNLG, Agenda and GenWiki-Fine, ca
 
 # Training Instructions
 
-Before implement our code, you need to pre-process each dataset, build vocabulary and initilized node embeddings:
+Before implement our code, you need to pre-process each dataset (train.json, valid.json, and test.json), and build vocabulary and initilized node embeddings:
 
 ```
 python process.py

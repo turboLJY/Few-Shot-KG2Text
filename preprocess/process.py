@@ -116,6 +116,7 @@ for fn in filename:
     for d in data:
         new_dict = dict()
 
+        # -------WebNLG dataset------
         valid = True
         ner_dict = {}
         ren_dict = {}
@@ -127,6 +128,39 @@ for fn in filename:
             ren_dict[en] = k
         new_dict['ner2ent'] = ner_dict
         new_dict['ent2ner'] = ren_dict
+        # -------WebNLG dataset------
+
+        # -------Agenda dataset------
+        # new_dict['title'] = get_text(d['title'])
+        # types = d['types'].split()
+        # valid = True
+        # ner_dict = {}
+        # ren_dict = {}
+        # for idx in range(len(types)):
+        #     en = get_nodes(d['entities'][idx])
+        #     if en == "":
+        #         valid = False
+        #     ner = types[idx][1:-1].upper()
+        #     ner_dict[ner + "_" + str(idx)] = en
+        #     ren_dict[en] = ner + "_" + str(idx)
+        # new_dict['ner2ent'] = ner_dict
+        # new_dict['ent2ner'] = ren_dict
+        # -------WebNLG dataset------
+
+        # -------Genwiki dataset------
+        # valid = True
+        # ner_dict = {}
+        # ren_dict = {}
+        # for idx, ent in enumerate(d['entities']):
+        #     ner = "ENT_" + str(idx)
+        #     en = get_nodes(ent)
+        #     if en == "":
+        #         valid = False
+        #     ner_dict[ner] = en
+        #     ren_dict[en] = ner
+        # new_dict['ner2ent'] = ner_dict
+        # new_dict['ent2ner'] = ren_dict
+        # -------WebNLG dataset------
 
         if not valid:
             continue

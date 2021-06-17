@@ -65,7 +65,7 @@ class GraphEncoder(nn.Module):
 
         self.gnn = []
         for layer in range(gnn_layers):
-            self.gnn.append(GCNConv(embedding_size, embedding_size))
+            self.gnn.append(RGCNConv(embedding_size, embedding_size))  # if rgcn is too slow, you can use gcn
         self.gnn = ListModule(*self.gnn)
 
     def forward(self, nodes, edges, types):

@@ -43,7 +43,7 @@ def camel_case_split(identifier):
 
 
 def get_nodes(n):
-    n = unidecode.unidecode(n.strip().lower())
+    n = n.strip().lower()
     n = n.replace('-', ' ')
     n = n.replace('_', ' ')
     n = nlp.word_tokenize(n)
@@ -52,7 +52,7 @@ def get_nodes(n):
 
 
 def get_relation(n):
-    n = unidecode.unidecode(n.strip().lower())
+    n = n.strip().lower()
     n = n.replace('-', ' ')
     n = n.replace('_', ' ')
     n = nlp.word_tokenize(n)
@@ -63,7 +63,7 @@ def get_relation(n):
 def get_text(txt, lower=True):
     if lower:
         txt = txt.lower()
-    txt = unidecode.unidecode(txt.strip())
+    txt = txt.strip()
     txt = txt.replace('-', ' ')
     txt = nlp.word_tokenize(txt)
 

@@ -70,36 +70,6 @@ def get_text(txt, lower=True):
     return txt
 
 
-def BFS(graph, s):
-    queue = [s]
-    seen = [s]
-    node_seq = []
-    while queue:
-        vertex = queue.pop(0)
-        adj_nodes = graph[vertex]
-        for w in adj_nodes:
-            if w not in seen:
-                queue.append(w)
-                seen.append(w)
-        node_seq.append(vertex)
-    return node_seq
-
-
-def DFS(graph, s):
-    stack = [s]
-    seen = [s]
-    node_seq = []
-    while stack:
-        vertex = stack.pop()
-        adj_nodes = graph[vertex]
-        for w in adj_nodes:
-            if w not in seen:
-                stack.append(w)
-                seen.append(w)
-        node_seq.append(vertex)
-    return node_seq
-
-
 bert_tokenizer = BartTokenizer.from_pretrained('../../pretrained_model/bart-large')
 bart_tokenizer = BartTokenizer.from_pretrained('../../pretrained_model/bart-large')
 # print(tokenizer.decoder_start_token_id)
@@ -264,54 +234,6 @@ for fn in filename:
             types.append(t[1])
         new_dict['edges'] = edges
         new_dict['types'] = types
-
-        #
-        # bfs_edges = [[], []]
-        # bfs_types = []
-        # for t in new_dict['triples']:
-        #     hid = new_dict['bfs_nodes'].index(t[0])
-        #     tid = new_dict['bfs_nodes'].index(t[2])
-        #     bfs_edges[0].append(hid)
-        #     bfs_edges[1].append(tid)
-        #     bfs_types.append(t[1])
-        #     bfs_edges[1].append(hid)
-        #     bfs_edges[0].append(tid)
-        #     bfs_types.append(t[1])
-        # new_dict['bfs_edges'] = bfs_edges
-        # new_dict['bfs_types'] = bfs_types
-        #
-        # new_dict['dfs_nodes'] = new_dict['nodes']
-        #
-        # dfs_edges = [[], []]
-        # dfs_types = []
-        # for t in new_dict['triples']:
-        #     hid = new_dict['dfs_nodes'].index(t[0])
-        #     tid = new_dict['dfs_nodes'].index(t[2])
-        #     dfs_edges[0].append(hid)
-        #     dfs_edges[1].append(tid)
-        #     dfs_types.append(t[1])
-        #     dfs_edges[1].append(hid)
-        #     dfs_edges[0].append(tid)
-        #     dfs_types.append(t[1])
-        # new_dict['dfs_edges'] = dfs_edges
-        # new_dict['dfs_types'] = dfs_types
-        #
-        # new_dict['shuffle_nodes'] = nodes
-        # random.shuffle(new_dict['shuffle_nodes'])
-        #
-        # shuffle_edges = [[], []]
-        # shuffle_types = []
-        # for t in new_dict['triples']:
-        #     hid = new_dict['shuffle_nodes'].index(t[0])
-        #     tid = new_dict['shuffle_nodes'].index(t[2])
-        #     shuffle_edges[0].append(hid)
-        #     shuffle_edges[1].append(tid)
-        #     shuffle_types.append(t[1])
-        #     shuffle_edges[1].append(hid)
-        #     shuffle_edges[0].append(tid)
-        #     shuffle_types.append(t[1])
-        # new_dict['shuffle_edges'] = shuffle_edges
-        # new_dict['shuffle_types'] = shuffle_types
 
         word_nodes = [bert_tokenizer.tokenize(node) for node in new_dict['nodes']]
         new_dict['split_nodes'] = [nd for nodes in word_nodes for nd in nodes]

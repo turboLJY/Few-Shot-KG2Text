@@ -27,6 +27,12 @@ class NLP:
 
 
 nlp = NLP()
+# used for RBFS
+embed_size = 512
+node2idx = pickle.load(open("transe_dict.pkl", "rb"))
+node_embedding = nn.Embedding(len(node2idx), embed_size)
+node_embedding.from_pretrained(torch.from_numpy(np.load("transe_embedding.npy")), freeze=True)
+node_embedding_weight = node_embedding.weight
 
 
 def camel_case_split(identifier):
@@ -68,6 +74,32 @@ def get_text(txt, lower=True):
     txt = nlp.word_tokenize(txt)
 
     return txt
+
+
+def RBFS(graph, s):
+    queue = [s]
+    seen = [s]
+    node_seq = []
+    while queue:
+        vertex = queue.pop(0)
+        parent_idx = node2idx[vertex]
+        parent_emb = node_embedding_weight[parent_idx]
+        adj_nodes = graph[vertex]
+        adj_weight = []
+        for w in adj_nodes:
+            son_idx = node2idx[w]
+            son_emb = node_embedding_weight[son_idx]
+            adj_weight.append((w, parent_emb.dot(son_emb).item()))
+
+        sorted_adj_weight = sorted(adj_weight, key=lambda x: x[1], reverse=True)
+        sorted_adj_nodes = [n for n, _ in sorted_adj_weight.items()]
+
+        for w in sorted_adj_nodes:
+            if w not in seen:
+                queue.append(w)
+                seen.append(w)
+        node_seq.append(vertex)
+    return node_seq
 
 
 bert_tokenizer = BartTokenizer.from_pretrained('../../pretrained_model/bart-large')
@@ -219,7 +251,10 @@ for fn in filename:
         #     if case_en not in nodes:
         #         nodes.append(case_en)
 
-        new_dict['nodes'] = nodes
+        new_dict['nodes'] = RBFS(adject, nodes[0])  # provide root node
+
+        # if you do not want to use RBFS
+        # new_dict['nodes'] = nodes
 
         edges = [[], []]
         types = []

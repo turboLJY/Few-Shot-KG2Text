@@ -32,7 +32,7 @@ python build_vocab.py
 python build_embedding.py
 ```
 
-After preparing all the files, you can run the run.sh file to start training by setting ```mode: train``` in config.yaml.
+Besides, we utilize [TransE](https://github.com/thunlp/OpenKE) for obtaining the KG embeddings for RBFS. After preparing all the files, you can run the run.sh file to start training by setting ```mode: train``` in config.yaml.
 
 ```
 sh run.sh 

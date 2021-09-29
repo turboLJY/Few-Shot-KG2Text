@@ -15,7 +15,7 @@ from pyeval.chrf.chrf import Chrf
 class Evaluate(object):
     def __init__(self):
         self.metrics = [
-            (Bleu(4), ["Bleu_4"]),
+            (Bleu(4), ["Bleu_1", "Bleu_2", "Bleu_3", "Bleu_4"]),
             #(Meteor(), "METEOR"),
             (Rouge(), "ROUGE_L"),
             (Cider(), "CIDEr"),
